@@ -1,0 +1,384 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technoformer Club- College Club Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3a0ca3;
+            --secondary: #4361ee;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fafb;
+            color: var(--dark);
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .club-hero {
+            background: url('technoformer1.jpg') no-repeat center center;
+            background-size: cover;
+            height: 500px;
+            width: 100%;
+            padding: 80px 0 100px 0;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .club-logo {
+            width: 150px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            background: white;
+            border-radius: 50%;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .club-logo i {
+            font-size: 5rem;
+            color: var(--primary);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border: none;
+            border-radius: 50px;
+            padding: 10px 25px;
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(58, 12, 163, 0.2);
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            border-radius: 3px;
+        }
+        
+        .event-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 12px;
+            overflow: hidden;
+            border: none;
+            margin-bottom: 20px;
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .member-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+            height: 100%;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .member-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 4px solid var(--light);
+        }
+        
+        .back-to-clubs {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .back-to-clubs:hover {
+            color: var(--secondary);
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--dark) 0%, #2c3e50 100%);
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .club-hero {
+                padding: 60px 0 80px 0;
+            }
+            
+            .display-4 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-users me-2"></i>
+                College Clubs Portal
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#clubs">Clubs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#events">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Club Hero Section -->
+    <section class="club-hero">
+        <div class="d-flex flex-wrap justify-content-center gap-3">
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h2 class="section-title">About Technoformer Club</h2>
+                
+                    <div class="mt-4">
+                        The Technoformer Club is a prominent and well-regarded student activity club based in Turkey, specifically within the Technopark of Istanbul Technical University (ITU). As the name suggests, 
+                        it is dedicated to the fascinating field of transformers—the essential electrical devices used for transferring electrical energy between circuits, crucial for power generation, transmission,
+                         and distribution. The club serves as a vital bridge between the theoretical knowledge gained in university lectures and the practical, hands-on skills demanded by the industry.
+
+
+                    </div>
+                </div>
+                
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Events Section -->
+    <section id="events" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">Upcoming Events</h2>
+            <div class="row">
+                <!-- Event 1 -->
+                <div class="col-md-6 mb-4">
+                    <div class="event-card card h-100">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Coding Competition</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted"><i class="far fa-calendar me-2"></i>Date</p>
+                            <p class="text-muted"><i class="fas fa-map-marker-alt me-2"></i>Location</p>
+                            <p>Event description with details about what participants can expect.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-info">X Participants</span>
+                                <a href="#" class="btn btn-sm btn-outline-primary">Register Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event 2 -->
+                <div class="col-md-6 mb-4">
+                    <div class="event-card card h-100">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Tech Quiz Competition</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="text-muted"><i class="far fa-calendar me-2"></i>Date</p>
+                            <p class="text-muted"><i class="fas fa-map-marker-alt me-2"></i>Location</p>
+                            <p>Event description with details about what participants can expect.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-info">X Participants</span>
+                                <a href="#" class="btn btn-sm btn-outline-primary">Register Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Club Leadership</h2>
+            <div class="row">
+                <!-- Leader 1 -->
+                <div class="col-md-4 mb-4">
+                    <div class="member-card">
+                        <img src="https://placehold.co/200x200/3a0ca3/ffffff?text=Initials" class="member-img" alt="Position">
+                        <h5>Lemina Bhagat</h5>
+                        <p class="text-primary">Presideent</p>
+                        <p class="small">3rd year CE</p>
+                        <div class="d-flex justify-content-center">
+                            <a href="#" class="btn btn-sm btn-outline-primary me-2"><i class="fa-solid fa-envelope"></i></a>
+                            <a href="#" class="btn btn-sm btn-outline-primary"><i class="fa-brands fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Leader 2 -->
+                <div class="col-md-4 mb-4">
+                    <div class="member-card">
+                        <img src="https://placehold.co/200x200/3a0ca3/ffffff?text=Initials" class="member-img" alt="Position">
+                        <h5>Gayatri Tasalwar</h5>
+                        <p class="text-primary">Vice President</p>
+                        <p class="small">3rd Year ETC</p>
+                        <div class="d-flex justify-content-center">
+                            <a href="#" class="btn btn-sm btn-outline-primary me-2"><i class="fa-solid fa-envelope"></i></a>
+                            <a href="#" class="btn btn-sm btn-outline-primary"><i class="fa-brands fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Leader 3 -->
+                <div class="col-md-4 mb-4">
+                    <div class="member-card">
+                        <img src="https://placehold.co/200x200/3a0ca3/ffffff?text=Initials" class="member-img" alt="Position">
+                        <h5>Vanshika Pardhi</h5>
+                        <p class="text-primary">Secretary</p>
+                        <p class="small">3rd Year ETC</p>
+                        <div class="d-flex justify-content-center">
+                            <a href="#" class="btn btn-sm btn-outline-primary me-2"><i class="fa-solid fa-envelope"></i></a>
+                            <a href="#" class="btn btn-sm btn-outline-primary"><i class="fa-brands fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section (Optional) -->
+    <!-- <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">Gallery</h2>
+            <div class="row">
+                Gallery images here
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Contact Technoformer Club</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Get in Touch</h5>
+                            <p><i class="fas fa-envelope me-2 text-primary"></i> <strong>Email:</strong> clubname@college.edu</p>
+                        
+                            <hr>
+                            <h6>Follow Us</h6>
+                            <div class="d-flex">
+                                <a href="#" class="btn btn-sm btn-outline-primary me-2"><i class="fab fa-instagram me-1"></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-primary"><i class="fa-solid fa-phone"></i></i></a>
+                                <a href="#" class="btn btn-sm btn-outline-primary"><i class="fa-brands fa-whatsapp"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div >
+                            
+              
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>College Clubs Portal</h5>
+                    <p>A centralized platform for all college extracurricular activities, clubs, and organizations.</p>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white text-decoration-none">Home</a></li>
+                        <li><a href="index.html#clubs" class="text-white text-decoration-none">Clubs</a></li>
+                        <li><a href="index.html#events" class="text-white text-decoration-none">Events</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Clubs</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="ieee.html" class="text-white text-decoration-none">IEEE</a></li>
+                        <li><a href="csi.html" class="text-white text-decoration-none">CSI</a></li>
+                        <li><a href="music-club.html" class="text-white text-decoration-none">Music Club</a></li>
+                        <li><a href="index.html#clubs" class="text-white text-decoration-none">More...</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> College Campus, City</li>
+                        <li><i class="fas fa-envelope me-2"></i> clubs@college.edu</li>
+                        <li><i class="fas fa-phone me-2"></i> (123) 456-7890</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-0 mb-4">
+            <div class="text-center">
+                <p class="mb-0">© 2025 College Clubs Portal. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

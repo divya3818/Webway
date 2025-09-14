@@ -1,0 +1,1522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - CCOEW Extracurricular Activities</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --warning-color: #f39c12;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .auth-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 20px;
+        }
+        
+        .auth-card {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            border: none;
+            overflow: hidden;
+        }
+        
+        .auth-card .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+        }
+        
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            background: white;
+            font-weight: bold;
+            border-bottom: 3px solid var(--primary-color);
+        }
+        
+        .auth-form {
+            padding: 20px;
+        }
+        
+        .admin-container {
+            max-width: 1400px;
+            margin: 20px auto;
+        }
+        
+        .admin-card {
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            border: none;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .admin-card .card-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .sidebar {
+            background-color: var(--secondary-color);
+            color: white;
+            height: calc(100vh - 40px);
+            position: sticky;
+            top: 20px;
+            border-radius: 15px;
+            padding: 0;
+        }
+        
+        .sidebar .profile-section {
+            padding: 20px;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+        
+        .sidebar .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid white;
+            margin-bottom: 15px;
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 12px 20px;
+            border-left: 4px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .sidebar .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .content-area {
+            padding: 20px;
+        }
+        
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+        }
+        
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            color: white;
+        }
+        
+        .stat-icon.events {
+            background: linear-gradient(135deg, var(--primary-color), #2980b9);
+        }
+        
+        .stat-icon.users {
+            background: linear-gradient(135deg, var(--success-color), #229954);
+        }
+        
+        .stat-icon.registrations {
+            background: linear-gradient(135deg, var(--warning-color), #e67e22);
+        }
+        
+        .table-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .table th {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .action-buttons .btn {
+            padding: 0.25rem 0.5rem;
+            margin-right: 5px;
+        }
+        
+        .notification-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1050;
+            animation: fadeIn 0.5s, fadeOut 0.5s 2.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
+        .form-section {
+            display: none;
+        }
+        
+        .form-section.active {
+            display: block;
+        }
+        
+        .event-image-preview {
+            max-width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Authentication Section -->
+    <div id="auth-section">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="card-header">
+                    <h4 class="mb-0">CCOEW Extracurricular Activities</h4>
+                    <p class="mb-0">Login to your account</p>
+                </div>
+                <div class="auth-tabs">
+                    <div class="auth-tab active" data-tab="login">Login</div>
+                    <div class="auth-tab" data-tab="register">Register</div>
+                </div>
+                <div class="auth-form">
+                    <form id="login-form">
+                        <div class="mb-3">
+                            <label for="login-email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="login-email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="login-password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="login-password" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="remember-me">
+                            <label class="form-check-label" for="remember-me">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Login</button>
+                        <div class="text-center mt-3">
+                            <a href="#" id="forgot-password">Forgot password? Contact admin</a>
+                        </div>
+                    </form>
+                    
+                    <form id="register-form" class="hidden">
+                        <div class="mb-3">
+                            <label for="register-name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="register-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="register-email" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="register-email" required>
+                            <div class="form-text">Must be a valid @cumminscollege.edu.in email</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="register-password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="register-password" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="register-role" class="form-label">Role</label>
+                            <select class="form-select" id="register-role" required>
+                                <option value="">Select Role</option>
+                                <option value="student">Student</option>
+                                <option value="faculty">Faculty</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                        <div class="row" id="student-fields">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="register-year" class="form-label">Year</label>
+                                    <select class="form-select" id="register-year">
+                                        <option value="">Select Year</option>
+                                        <option value="FE">First Year</option>
+                                        <option value="SE">Second Year</option>
+                                        <option value="TE">Third Year</option>
+                                        <option value="BE">Final Year</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="register-branch" class="form-label">Branch</label>
+                                    <select class="form-select" id="register-branch">
+                                        <option value="">Select Branch</option>
+                                        <option value="Computer">Computer Engineering</option>
+                                        <option value="IT">IT Engineering</option>
+                                        <option value="Mechanical">Mechanical Engineering</option>
+                                        <option value="Electrical">Electrical Engineering</option>
+                                        <option value="ENTC">Electronics & Telecommunication</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Section -->
+    <div id="admin-panel" class="hidden">
+        <div class="admin-container">
+            <div class="row">
+                <!-- Sidebar -->
+                <div class="col-md-3">
+                    <div class="admin-card sidebar">
+                        <div class="profile-section">
+                            <img src="https://ui-avatars.com/api/?name=Admin+User&background=3498db&color=fff" alt="Admin Profile" class="profile-img">
+                            <h5 id="admin-name">Admin User</h5>
+                            <p class="mb-0"><span class="badge bg-danger" id="user-role">Administrator</span></p>
+                        </div>
+                        <nav class="nav flex-column mt-3">
+                            <a class="nav-link active" href="#" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                            <a class="nav-link admin-only" href="#" data-section="events"><i class="fas fa-calendar-plus"></i> Manage Events</a>
+                            <a class="nav-link admin-only" href="#" data-section="registration-links"><i class="fas fa-link"></i> Registration Links</a>
+                            <a class="nav-link admin-only" href="#" data-section="users"><i class="fas fa-users"></i> User Management</a>
+                            <a class="nav-link" href="#" data-section="profile"><i class="fas fa-user-cog"></i> My Profile</a>
+                            <a class="nav-link" href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                        </nav>
+                    </div>
+                </div>
+                
+                <!-- Content Area -->
+                <div class="col-md-9">
+                    <!-- Dashboard Section -->
+                    <div id="dashboard" class="form-section active">
+                        <div class="admin-card">
+                            <div class="card-header">
+                                <h4 class="mb-0"><i class="fas fa-tachometer-alt me-2"></i> Dashboard</h4>
+                                <span id="current-date" class="badge bg-light text-dark"></span>
+                            </div>
+                            <div class="card-body">
+                                <div class="dashboard-stats">
+                                    <div class="stat-card">
+                                        <div class="stat-icon events">
+                                            <i class="fas fa-calendar"></i>
+                                        </div>
+                                        <div>
+                                            <h3 id="events-count">0</h3>
+                                            <p class="mb-0">Upcoming Events</p>
+                                        </div>
+                                    </div>
+                                    <div class="stat-card">
+                                        <div class="stat-icon users">
+                                            <i class="fas fa-users"></i>
+                                        </div>
+                                        <div>
+                                            <h3 id="users-count">0</h3>
+                                            <p class="mb-0">Registered Users</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <h5 class="mt-4 mb-3">Recent Events</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="recent-events-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Event Name</th>
+                                                <th>Date</th>
+                                                <th>Location</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Events Management Section -->
+                    <div id="events" class="form-section">
+                        <div class="admin-card">
+                            <div class="card-header">
+                                <h4 class="mb-0"><i class="fas fa-calendar-plus me-2"></i> Manage Events</h4>
+                                <button class="btn btn-light btn-sm admin-only" id="add-event-btn"><i class="fas fa-plus me-1"></i> Add Event</button>
+                            </div>
+                            <div class="card-body">
+                                <div id="event-form" style="display: none;">
+                                    <h5 class="mb-3" id="event-form-title">Add New Event</h5>
+                                    <form id="event-details-form">
+                                        <input type="hidden" id="event-id">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="event-title" class="form-label">Event Title</label>
+                                                    <input type="text" class="form-control" id="event-title" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="event-category" class="form-label">Category</label>
+                                                    <select class="form-select" id="event-category" required>
+                                                        <option value="">Select Category</option>
+                                                        <option value="Cultural">Cultural</option>
+                                                        <option value="Technical">Technical</option>
+                                                        <option value="Sports">Sports</option>
+                                                        <option value="Workshop">Workshop</option>
+                                                        <option value="Conference">Conference</option>
+                                                        <option value="Other">Other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="event-date" class="form-label">Event Date</label>
+                                                    <input type="date" class="form-control" id="event-date" required>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="event-location" class="form-label">Location</label>
+                                                    <input type="text" class="form-control" id="event-location" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="event-description" class="form-label">Description</label>
+                                            <textarea class="form-control" id="event-description" rows="3" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="event-full-description" class="form-label">Full Description</label>
+                                            <textarea class="form-control" id="event-full-description" rows="5" required></textarea>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="event-image" class="form-label">Event Image URL</label>
+                                                    <input type="text" class="form-control" id="event-image" placeholder="Paste image URL">
+                                                    <img id="event-image-preview" class="event-image-preview">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="mb-3">
+                                                    <label for="event-registration-link" class="form-label">Registration Link</label>
+                                                    <input type="url" class="form-control" id="event-registration-link" placeholder="https://forms.google.com/...">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <button type="button" class="btn btn-secondary me-2" id="cancel-event-btn">Cancel</button>
+                                            <button type="submit" class="btn btn-primary">Save Event</button>
+                                        </div>
+                                    </form>
+                                    <hr class="my-4">
+                                </div>
+                                
+                                <h5 class="mb-3">Current Events</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="events-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Event Name</th>
+                                                <th>Category</th>
+                                                <th>Date</th>
+                                                <th>Location</th>
+                                                <th class="admin-only">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Registration Links Section -->
+                    <div id="registration-links" class="form-section">
+                        <div class="admin-card">
+                            <div class="card-header">
+                                <h4 class="mb-0"><i class="fas fa-link me-2"></i> Registration Links</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i> These registration links will be displayed on the main page for students to register for events.
+                                </div>
+                                
+                                <form id="registration-link-form" class="mb-4">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="link-event" class="form-label">Select Event</label>
+                                                <select class="form-select" id="link-event" required>
+                                                    <option value="">Choose an event</option>
+                                                    <!-- Will be populated by JavaScript -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="registration-url" class="form-label">Registration URL</label>
+                                                <input type="url" class="form-control" id="registration-url" placeholder="https://forms.google.com/..." required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Save Registration Link</button>
+                                </form>
+                                
+                                <h5 class="mb-3">Current Registration Links</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="registration-links-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Event</th>
+                                                <th>Registration Link</th>
+                                                <th class="admin-only">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- User Management Section -->
+                    <div id="users" class="form-section">
+                        <div class="admin-card">
+                            <div class="card-header">
+                                <h4 class="mb-0"><i class="fas fa-users me-2"></i> User Management</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-warning">
+                                    <i class="fas fa-exclamation-triangle me-2"></i> As an administrator, you can manage user accounts, reset passwords, and delete accounts upon request.
+                                </div>
+                                
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h5>Registered Users</h5>
+                                    <div class="input-group" style="max-width: 300px;">
+                                        <input type="text" class="form-control" placeholder="Search users..." id="user-search">
+                                        <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                                
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="users-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Year</th>
+                                                <th>Branch</th>
+                                                <th class="admin-only">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Will be populated by JavaScript -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Profile Section -->
+                    <div id="profile" class="form-section">
+                        <div class="admin-card">
+                            <div class="card-header">
+                                <h4 class="mb-0"><i class="fas fa-user-cog me-2"></i> My Profile</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="text-center">
+                                            <img src="https://ui-avatars.com/api/?name=Admin+User&background=3498db&color=fff" alt="Profile" class="img-fluid rounded-circle mb-3" style="max-width: 200px;">
+                                            <h4 id="profile-name">Admin User</h4>
+                                            <p class="text-muted" id="profile-role">Administrator</p>
+                                            <div class="d-grid gap-2">
+                                                <button class="btn btn-outline-primary" id="change-password-btn">Change Password</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <form id="profile-form">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="profile-fullname" class="form-label">Full Name</label>
+                                                        <input type="text" class="form-control" id="profile-fullname" value="Admin User">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="profile-email" class="form-label">Email</label>
+                                                        <input type="email" class="form-control" id="profile-email" value="admin.user@cumminscollege.edu.in" readonly>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row" id="profile-student-fields">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="profile-year" class="form-label">Year</label>
+                                                        <select class="form-select" id="profile-year">
+                                                            <option value="">Select Year</option>
+                                                            <option value="FE">First Year</option>
+                                                            <option value="SE">Second Year</option>
+                                                            <option value="TE">Third Year</option>
+                                                            <option value="BE">Final Year</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="profile-branch" class="form-label">Branch</label>
+                                                        <select class="form-select" id="profile-branch">
+                                                            <option value="">Select Branch</option>
+                                                            <option value="Computer">Computer Engineering</option>
+                                                            <option value="IT">IT Engineering</option>
+                                                            <option value="Mechanical">Mechanical Engineering</option>
+                                                            <option value="Electrical">Electrical Engineering</option>
+                                                            <option value="ENTC">Electronics & Telecommunication</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="profile-bio" class="form-label">Bio</label>
+                                                <textarea class="form-control" id="profile-bio" rows="3" placeholder="Tell us about yourself..."></textarea>
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Update Profile</button>
+                                        </form>
+                                        
+                                        <div id="change-password-form" class="mt-4" style="display: none;">
+                                            <h5>Change Password</h5>
+                                            <form id="password-form">
+                                                <div class="mb-3">
+                                                    <label for="current-password" class="form-label">Current Password</label>
+                                                    <input type="password" class="form-control" id="current-password" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="new-password" class="form-label">New Password</label>
+                                                    <input type="password" class="form-control" id="new-password" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="confirm-password" class="form-label">Confirm New Password</label>
+                                                    <input type="password" class="form-control" id="confirm-password" required>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Update Password</button>
+                                                <button type="button" class="btn btn-secondary ms-2" id="cancel-password-btn">Cancel</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal fade" id="deleteConfirmModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this item? This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirm-delete-btn">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // API endpoints - replace with your actual backend URL
+        const API_BASE_URL = 'http://localhost:3000/api';
+        
+        // Global variables
+        let currentUser = null;
+        let events = [];
+        let users = [];
+        let registrationLinks = [];
+        let itemToDelete = null;
+        let deleteType = null;
+
+        // Initialize when DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is already logged in
+            const savedUser = localStorage.getItem('userData');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showAdminPanel();
+                initializeAdminPanel();
+            } else {
+                showAuthSection();
+            }
+            
+            // Setup authentication tabs
+            document.querySelectorAll('.auth-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchAuthTab(tabName);
+                });
+            });
+            
+            // Login form submission
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                login();
+            });
+            
+            // Register form submission
+            document.getElementById('register-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                register();
+            });
+            
+            // Show/hide student fields based on role selection
+            document.getElementById('register-role').addEventListener('change', function() {
+                toggleStudentFields();
+            });
+            
+            // Forgot password link
+            document.getElementById('forgot-password').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Please contact the system administrator to reset your password.');
+            });
+        });
+        
+        // Switch between login and register tabs
+        function switchAuthTab(tabName) {
+            document.querySelectorAll('.auth-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelector(`.auth-tab[data-tab="${tabName}"]`).classList.add('active');
+            
+            if (tabName === 'login') {
+                document.getElementById('login-form').classList.remove('hidden');
+                document.getElementById('register-form').classList.add('hidden');
+            } else {
+                document.getElementById('login-form').classList.add('hidden');
+                document.getElementById('register-form').classList.remove('hidden');
+                toggleStudentFields();
+            }
+        }
+        
+        // Toggle student fields based on role selection
+        function toggleStudentFields() {
+            const role = document.getElementById('register-role').value;
+            if (role === 'student') {
+                document.getElementById('student-fields').classList.remove('hidden');
+                document.getElementById('register-year').setAttribute('required', 'true');
+                document.getElementById('register-branch').setAttribute('required', 'true');
+            } else {
+                document.getElementById('student-fields').classList.add('hidden');
+                document.getElementById('register-year').removeAttribute('required');
+                document.getElementById('register-branch').removeAttribute('required');
+            }
+        }
+        
+        // Show authentication section
+        function showAuthSection() {
+            document.getElementById('auth-section').classList.remove('hidden');
+            document.getElementById('admin-panel').classList.add('hidden');
+        }
+        
+        // Show admin panel
+        function showAdminPanel() {
+            document.getElementById('auth-section').classList.add('hidden');
+            document.getElementById('admin-panel').classList.remove('hidden');
+        }
+        
+        // Initialize admin panel after login
+        function initializeAdminPanel() {
+            // Set current date
+            document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            // Set user info
+            document.getElementById('admin-name').textContent = currentUser.fullname;
+            document.getElementById('user-role').textContent = currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1);
+            document.getElementById('profile-name').textContent = currentUser.fullname;
+            document.getElementById('profile-role').textContent = currentUser.role.charAt(0).toUpperCase() + currentUser.role.slice(1);
+            document.getElementById('profile-fullname').value = currentUser.fullname;
+            document.getElementById('profile-email').value = currentUser.email;
+            
+            // Show/hide admin-only features
+            if (currentUser.role !== 'admin') {
+                document.querySelectorAll('.admin-only').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                // Hide student fields in profile if not a student
+                if (currentUser.role !== 'student') {
+                    document.getElementById('profile-student-fields').style.display = 'none';
+                } else {
+                    // Prefill student fields
+                    document.getElementById('profile-year').value = currentUser.year || '';
+                    document.getElementById('profile-branch').value = currentUser.branch || '';
+                }
+            } else {
+                // Show admin-only features
+                document.querySelectorAll('.admin-only').forEach(el => {
+                    el.style.display = 'block';
+                });
+            }
+            
+            // Load data
+            loadDashboardData();
+            loadEvents();
+            loadUsers();
+            loadRegistrationLinks();
+            
+            // Navigation
+            document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sectionId = this.getAttribute('data-section');
+                    showSection(sectionId);
+                    
+                    // Update active class
+                    document.querySelectorAll('.nav-link').forEach(navLink => {
+                        navLink.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                });
+            });
+            
+            // Logout button
+            document.getElementById('logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('userData');
+                showAuthSection();
+            });
+            
+            // Event form handling
+            document.getElementById('add-event-btn').addEventListener('click', function() {
+                showEventForm();
+            });
+            
+            document.getElementById('cancel-event-btn').addEventListener('click', function() {
+                hideEventForm();
+                resetEventForm();
+            });
+            
+            document.getElementById('event-details-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveEvent();
+            });
+            
+            document.getElementById('event-image').addEventListener('input', function() {
+                const preview = document.getElementById('event-image-preview');
+                if (this.value) {
+                    preview.src = this.value;
+                    preview.style.display = 'block';
+                } else {
+                    preview.style.display = 'none';
+                }
+            });
+            
+            // Registration link form
+            document.getElementById('registration-link-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                saveRegistrationLink();
+            });
+            
+            // Profile form
+            document.getElementById('profile-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                updateProfile();
+            });
+            
+            // Password form
+            document.getElementById('change-password-btn').addEventListener('click', function() {
+                document.getElementById('change-password-form').style.display = 'block';
+            });
+            
+            document.getElementById('cancel-password-btn').addEventListener('click', function() {
+                document.getElementById('change-password-form').style.display = 'none';
+                document.getElementById('password-form').reset();
+            });
+            
+            document.getElementById('password-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                changePassword();
+            });
+            
+            // Initialize delete modal
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
+            document.getElementById('confirm-delete-btn').addEventListener('click', function() {
+                if (deleteType === 'event') {
+                    deleteEvent(itemToDelete);
+                } else if (deleteType === 'user') {
+                    deleteUser(itemToDelete);
+                } else if (deleteType === 'registration') {
+                    deleteRegistrationLink(itemToDelete);
+                }
+                deleteModal.hide();
+            });
+        }
+        
+        // Login function
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Validate email format
+            if (!email.endsWith('@cumminscollege.edu.in')) {
+                showNotification('Please use your Cummins College email address.', 'danger');
+                return;
+            }
+            
+            // In a real application, you would make an API call to authenticate
+            // For this demo, we'll use localStorage to simulate authentication
+            
+            // Get users from localStorage
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            // Find user with matching credentials
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                // Remove password from user object before storing
+                const { password, ...userWithoutPassword } = user;
+                currentUser = userWithoutPassword;
+                
+                // Store user data in localStorage
+                localStorage.setItem('userData', JSON.stringify(userWithoutPassword));
+                
+                // Show admin panel
+                showAdminPanel();
+                initializeAdminPanel();
+                
+                showNotification('Login successful!', 'success');
+            } else {
+                showNotification('Invalid email or password.', 'danger');
+            }
+        }
+        
+        // Register function
+        function register() {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const role = document.getElementById('register-role').value;
+            const year = document.getElementById('register-year').value;
+            const branch = document.getElementById('register-branch').value;
+            
+            // Validate email format
+            if (!email.endsWith('@cumminscollege.edu.in')) {
+                showNotification('Please use a valid Cummins College email address.', 'danger');
+                return;
+            }
+            
+            // Get existing users
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            // Check if email already exists
+            if (users.some(u => u.email === email)) {
+                showNotification('Email already registered.', 'danger');
+                return;
+            }
+            
+            // Create new user object
+            const newUser = {
+                id: users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1,
+                fullname: name,
+                email: email,
+                password: password, // In a real app, this would be hashed
+                role: role,
+                year: role === 'student' ? year : '',
+                branch: role === 'student' ? branch : '',
+                bio: ''
+            };
+            
+            // Add to users array
+            users.push(newUser);
+            
+            // Save to localStorage
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Show success message and switch to login tab
+            showNotification('Registration successful! Please login.', 'success');
+            switchAuthTab('login');
+            document.getElementById('login-email').value = email;
+            document.getElementById('register-form').reset();
+        }
+        
+        // Show specific section
+        function showSection(sectionId) {
+            document.querySelectorAll('.form-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+        
+        // Load dashboard data
+        function loadDashboardData() {
+            // Get events from localStorage
+            const events = JSON.parse(localStorage.getItem('events') || '[]');
+            
+            // Get users from localStorage
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            // Update counts
+            document.getElementById('events-count').textContent = events.length;
+            document.getElementById('users-count').textContent = users.length;
+            
+            // Populate recent events table
+            const eventsTable = document.getElementById('recent-events-table').querySelector('tbody');
+            eventsTable.innerHTML = '';
+            
+            // Sort events by date (newest first) and take up to 5
+            const recentEvents = [...events]
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 5);
+            
+            if (recentEvents.length === 0) {
+                eventsTable.innerHTML = `
+                    <tr>
+                        <td colspan="4" class="text-center">No events found.</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            recentEvents.forEach(event => {
+                const eventDate = new Date(event.date);
+                const today = new Date();
+                let status = 'Upcoming';
+                let statusClass = 'bg-warning';
+                
+                if (eventDate < today) {
+                    status = 'Completed';
+                    statusClass = 'bg-secondary';
+                } else if (eventDate.toDateString() === today.toDateString()) {
+                    status = 'Today';
+                    statusClass = 'bg-success';
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${event.title}</td>
+                    <td>${eventDate.toLocaleDateString()}</td>
+                    <td>${event.location}</td>
+                    <td><span class="badge ${statusClass}">${status}</span></td>
+                `;
+                eventsTable.appendChild(row);
+            });
+        }
+        
+        // Load events
+        function loadEvents() {
+            // Get events from localStorage
+            events = JSON.parse(localStorage.getItem('events') || '[]');
+            
+            displayEvents();
+            populateEventDropdown();
+        }
+        
+        // Display events in the table
+        function displayEvents() {
+            const eventsTable = document.getElementById('events-table').querySelector('tbody');
+            eventsTable.innerHTML = '';
+            
+            if (events.length === 0) {
+                eventsTable.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="text-center">No events found.</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            events.forEach(event => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${event.title}</td>
+                    <td><span class="badge bg-info">${event.category}</span></td>
+                    <td>${new Date(event.date).toLocaleDateString()}</td>
+                    <td>${event.location}</td>
+                    <td class="action-buttons">
+                        ${currentUser.role === 'admin' ? `
+                            <button class="btn btn-sm btn-outline-primary edit-event" data-id="${event.id}"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-sm btn-outline-danger delete-event" data-id="${event.id}"><i class="fas fa-trash"></i></button>
+                        ` : '<span class="text-muted">View only</span>'}
+                    </td>
+                `;
+                eventsTable.appendChild(row);
+            });
+            
+            // Add event listeners to edit and delete buttons (admin only)
+            if (currentUser.role === 'admin') {
+                document.querySelectorAll('.edit-event').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const eventId = this.getAttribute('data-id');
+                        editEvent(eventId);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-event').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const eventId = this.getAttribute('data-id');
+                        confirmDelete('event', eventId);
+                    });
+                });
+            }
+        }
+        
+        // Populate event dropdown for registration links
+        function populateEventDropdown() {
+            const eventDropdown = document.getElementById('link-event');
+            eventDropdown.innerHTML = '<option value="">Choose an event</option>';
+            
+            events.forEach(event => {
+                const option = document.createElement('option');
+                option.value = event.id;
+                option.textContent = event.title;
+                eventDropdown.appendChild(option);
+            });
+        }
+        
+        // Show event form
+        function showEventForm() {
+            document.getElementById('event-form').style.display = 'block';
+            document.getElementById('event-form-title').textContent = 'Add New Event';
+            document.getElementById('add-event-btn').style.display = 'none';
+        }
+        
+        // Hide event form
+        function hideEventForm() {
+            document.getElementById('event-form').style.display = 'none';
+            document.getElementById('add-event-btn').style.display = 'block';
+        }
+        
+        // Reset event form
+        function resetEventForm() {
+            document.getElementById('event-details-form').reset();
+            document.getElementById('event-id').value = '';
+            document.getElementById('event-image-preview').style.display = 'none';
+        }
+        
+        // Save event
+        function saveEvent() {
+            const eventId = document.getElementById('event-id').value;
+            const eventData = {
+                title: document.getElementById('event-title').value,
+                category: document.getElementById('event-category').value,
+                date: document.getElementById('event-date').value,
+                location: document.getElementById('event-location').value,
+                description: document.getElementById('event-description').value,
+                full_description: document.getElementById('event-full-description').value,
+                image_url: document.getElementById('event-image').value,
+                registration_link: document.getElementById('event-registration-link').value
+            };
+            
+            if (eventId) {
+                // Update existing event
+                const index = events.findIndex(e => e.id == eventId);
+                if (index !== -1) {
+                    events[index] = { ...events[index], ...eventData };
+                }
+            } else {
+                // Add new event
+                const newId = events.length > 0 ? Math.max(...events.map(e => e.id)) + 1 : 1;
+                events.push({ id: newId, ...eventData });
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('events', JSON.stringify(events));
+            
+            // Update the main page's localStorage to reflect changes
+            localStorage.setItem('eventsUpdated', 'true');
+            
+            // Refresh display
+            displayEvents();
+            populateEventDropdown();
+            hideEventForm();
+            resetEventForm();
+            
+            showNotification('Event saved successfully!', 'success');
+        }
+        
+        // Edit event
+        function editEvent(eventId) {
+            const event = events.find(e => e.id == eventId);
+            if (!event) return;
+            
+            document.getElementById('event-id').value = event.id;
+            document.getElementById('event-title').value = event.title;
+            document.getElementById('event-category').value = event.category;
+            document.getElementById('event-date').value = event.date;
+            document.getElementById('event-location').value = event.location;
+            document.getElementById('event-description').value = event.description;
+            document.getElementById('event-full-description').value = event.full_description;
+            document.getElementById('event-image').value = event.image_url || '';
+            document.getElementById('event-registration-link').value = event.registration_link || '';
+            
+            if (event.image_url) {
+                document.getElementById('event-image-preview').src = event.image_url;
+                document.getElementById('event-image-preview').style.display = 'block';
+            } else {
+                document.getElementById('event-image-preview').style.display = 'none';
+            }
+            
+            document.getElementById('event-form-title').textContent = 'Edit Event';
+            showEventForm();
+        }
+        
+        // Confirm delete
+        function confirmDelete(type, id) {
+            itemToDelete = id;
+            deleteType = type;
+            
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteConfirmModal'));
+            deleteModal.show();
+        }
+        
+        // Delete event
+        function deleteEvent(eventId) {
+            events = events.filter(e => e.id != eventId);
+            localStorage.setItem('events', JSON.stringify(events));
+            
+            // Also remove any registration links for this event
+            registrationLinks = registrationLinks.filter(link => link.eventId != eventId);
+            localStorage.setItem('registrationLinks', JSON.stringify(registrationLinks));
+            
+            displayEvents();
+            populateEventDropdown();
+            displayRegistrationLinks();
+            
+            showNotification('Event deleted successfully!', 'success');
+        }
+        
+        // Load users
+        function loadUsers() {
+            // Get users from localStorage
+            users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            displayUsers();
+        }
+        
+        // Display users in the table
+        function displayUsers() {
+            const usersTable = document.getElementById('users-table').querySelector('tbody');
+            usersTable.innerHTML = '';
+            
+            if (users.length === 0) {
+                usersTable.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center">No users found.</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            users.forEach(user => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${user.fullname}</td>
+                    <td>${user.email}</td>
+                    <td><span class="badge ${user.role === 'admin' ? 'bg-danger' : user.role === 'faculty' ? 'bg-warning' : 'bg-info'}">${user.role}</span></td>
+                    <td>${user.year || '-'}</td>
+                    <td>${user.branch || '-'}</td>
+                    <td class="action-buttons">
+                        ${user.role !== 'admin' && currentUser.role === 'admin' ? `
+                            <button class="btn btn-sm btn-outline-primary reset-password" data-id="${user.id}"><i class="fas fa-key"></i></button>
+                            <button class="btn btn-sm btn-outline-danger delete-user" data-id="${user.id}"><i class="fas fa-trash"></i></button>
+                        ` : '<span class="text-muted">No actions</span>'}
+                    </td>
+                `;
+                usersTable.appendChild(row);
+            });
+            
+            // Add event listeners to action buttons (admin only)
+            if (currentUser.role === 'admin') {
+                document.querySelectorAll('.reset-password').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const userId = this.getAttribute('data-id');
+                        resetUserPassword(userId);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-user').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const userId = this.getAttribute('data-id');
+                        confirmDelete('user', userId);
+                    });
+                });
+            }
+        }
+        
+        // Reset user password
+        function resetUserPassword(userId) {
+            const user = users.find(u => u.id == userId);
+            if (!user) return;
+            
+            if (confirm(`Reset password for ${user.fullname}? A temporary password will be generated.`)) {
+                // In a real application, you would send an email with a temporary password
+                showNotification(`Temporary password generated for ${user.fullname}. They should check their email.`, 'success');
+            }
+        }
+        
+        // Delete user
+        function deleteUser(userId) {
+            users = users.filter(u => u.id != userId);
+            localStorage.setItem('users', JSON.stringify(users));
+            displayUsers();
+            showNotification('User deleted successfully!', 'success');
+        }
+        
+        // Load registration links
+        function loadRegistrationLinks() {
+            // Get registration links from localStorage
+            registrationLinks = JSON.parse(localStorage.getItem('registrationLinks') || '[]');
+            
+            displayRegistrationLinks();
+        }
+        
+        // Display registration links in the table
+        function displayRegistrationLinks() {
+            const linksTable = document.getElementById('registration-links-table').querySelector('tbody');
+            linksTable.innerHTML = '';
+            
+            if (registrationLinks.length === 0) {
+                linksTable.innerHTML = `
+                    <tr>
+                        <td colspan="3" class="text-center">No registration links found.</td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            registrationLinks.forEach(link => {
+                const event = events.find(e => e.id == link.eventId);
+                const eventName = event ? event.title : 'Unknown Event';
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${eventName}</td>
+                    <td><a href="${link.url}" target="_blank">${link.url}</a></td>
+                    <td class="action-buttons">
+                        ${currentUser.role === 'admin' ? `
+                            <button class="btn btn-sm btn-outline-danger delete-registration" data-id="${link.id}"><i class="fas fa-trash"></i></button>
+                        ` : '<span class="text-muted">View only</span>'}
+                    </td>
+                `;
+                linksTable.appendChild(row);
+            });
+            
+            // Add event listeners to delete buttons (admin only)
+            if (currentUser.role === 'admin') {
+                document.querySelectorAll('.delete-registration').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const linkId = this.getAttribute('data-id');
+                        confirmDelete('registration', linkId);
+                    });
+                });
+            }
+        }
+        
+        // Save registration link
+        function saveRegistrationLink() {
+            const eventId = document.getElementById('link-event').value;
+            const url = document.getElementById('registration-url').value;
+            
+            if (!eventId || !url) {
+                showNotification('Please select an event and provide a URL.', 'danger');
+                return;
+            }
+            
+            // Check if a link already exists for this event
+            const existingLinkIndex = registrationLinks.findIndex(link => link.eventId == eventId);
+            
+            if (existingLinkIndex !== -1) {
+                // Update existing link
+                registrationLinks[existingLinkIndex].url = url;
+            } else {
+                // Add new link
+                const newId = registrationLinks.length > 0 ? Math.max(...registrationLinks.map(link => link.id)) + 1 : 1;
+                registrationLinks.push({ id: newId, eventId: parseInt(eventId), url });
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('registrationLinks', JSON.stringify(registrationLinks));
+            
+            // Update the main page's localStorage to reflect changes
+            localStorage.setItem('eventsUpdated', 'true');
+            
+            // Refresh display
+            displayRegistrationLinks();
+            document.getElementById('registration-link-form').reset();
+            
+            showNotification('Registration link saved successfully!', 'success');
+        }
+        
+        // Delete registration link
+        function deleteRegistrationLink(linkId) {
+            registrationLinks = registrationLinks.filter(link => link.id != linkId);
+            localStorage.setItem('registrationLinks', JSON.stringify(registrationLinks));
+            displayRegistrationLinks();
+            showNotification('Registration link deleted successfully!', 'success');
+        }
+        
+        // Update profile
+        function updateProfile() {
+            const fullname = document.getElementById('profile-fullname').value;
+            const year = document.getElementById('profile-year').value;
+            const branch = document.getElementById('profile-branch').value;
+            const bio = document.getElementById('profile-bio').value;
+            
+            // Update current user data
+            currentUser.fullname = fullname;
+            currentUser.year = year;
+            currentUser.branch = branch;
+            currentUser.bio = bio;
+            
+            // Update in users array
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+            if (userIndex !== -1) {
+                users[userIndex] = { ...users[userIndex], fullname, year, branch, bio };
+                localStorage.setItem('users', JSON.stringify(users));
+            }
+            
+            // Update in localStorage
+            localStorage.setItem('userData', JSON.stringify(currentUser));
+            
+            // Update displayed name
+            document.getElementById('admin-name').textContent = fullname;
+            document.getElementById('profile-name').textContent = fullname;
+            
+            showNotification('Profile updated successfully!', 'success');
+        }
+        
+        // Change password
+        function changePassword() {
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (newPassword !== confirmPassword) {
+                showNotification('New passwords do not match.', 'danger');
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                showNotification('Password should be at least 6 characters long.', 'danger');
+                return;
+            }
+            
+            // In a real application, you would verify the current password with the server
+            // For this demo, we'll just show a success message
+            showNotification('Password changed successfully!', 'success');
+            document.getElementById('password-form').reset();
+            document.getElementById('change-password-form').style.display = 'none';
+        }
+        
+        // Function to show notification
+        function showNotification(message, type) {
+            // Remove any existing notifications
+            const existingNotification = document.querySelector('.notification-toast');
+            if (existingNotification) {
+                existingNotification.remove();
+            }
+            
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type} notification-toast`;
+            notification.innerHTML = `
+                <button type="button" class="btn-close float-end" data-bs-dismiss="alert"></button>
+                <div><i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'danger' ? 'fa-exclamation-circle' : 'fa-info-circle'} me-2"></i> ${message}</div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

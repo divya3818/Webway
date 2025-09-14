@@ -1,0 +1,1063 @@
+index.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCOEW Extracurricular Activities</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom Styles */
+        .logo-img {
+            height: 50px;
+            width: auto;
+        }
+
+        .navbar .search-bar {
+            width: 30%;
+            max-width: 300px;
+        }
+
+        .hero-section {
+            margin-top: 76px;
+        }
+
+        .hero-section .carousel-item {
+            height: 700px;
+        }
+
+        .hero-section .carousel-item img {
+            object-fit: cover;
+            height: 100%;
+            width: 100%;
+        }    
+
+        .hero-section .carousel-caption {
+            border-radius: 10px;
+            padding: 20px;
+            bottom: 70%;
+            transform: translateY(50%);
+        }
+
+        .category-card, .event-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+        }
+
+        .category-card:hover, .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-card img {
+            height: 300px;
+            object-fit: cover;
+        }
+
+        .event-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-logo {
+            height: 60px;
+            width: auto;
+        }
+
+        /* SRC Team Styles */
+        .src-member {
+            display: flex;
+            padding: 10px;
+        }
+
+        .src-member img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+
+        .src-info h6 {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .src-info p {
+            margin-bottom: 2px;
+            font-size: 0.9rem;
+        }
+
+        /* Section spacing */
+        section {
+            padding: 60px 0;
+            scroll-margin-top: 80px;
+        }
+
+        /* SRC Team Section Styles */
+        .src-team .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .src-team .col-md-6 {
+            display: flex;
+            justify-content: center;
+        }
+
+        .src-team .src-member {
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+            width: 100%;
+        }
+
+        .src-team .src-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .src-info h5 {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .src-info p {
+            margin-bottom: 2px;
+            font-size: 0.9rem;
+        }
+
+        /* Theme styles */
+        body.light-theme {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        body.dark-theme {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        body.dark-theme .card {
+            background-color: #2a2a2a;
+            color: #ffffff;
+        }
+
+        body.dark-theme .card-header {
+            background-color: #343a40;
+            color: #ffffff;
+        }
+
+        /* Dark theme text color adjustments */
+        body.dark-theme .card-text,
+        body.dark-theme .src-info p,
+        body.dark-theme .src-info h5,
+        body.dark-theme .src-info h6,
+        body.dark-theme .carousel-caption h1,
+        body.dark-theme .carousel-caption h2,
+        body.dark-theme .carousel-caption p,
+        body.dark-theme .src-member .src-info h5,
+        body.dark-theme .src-member .src-info p {
+            color: #ffffff !important;
+        }
+
+        body.dark-theme .card-title {
+            color: #f8f9fa;
+        }
+
+        /* SRC Team specific dark theme adjustments */
+        body.dark-theme .src-team .src-member {
+            background-color: #2a2a2a !important;
+            color: #ffffff;
+        }
+
+        body.dark-theme .src-info h5,
+        body.dark-theme .src-info p {
+            color: #ffffff !important;
+        }
+
+        /* Navbar styling with hover effects */
+        .navbar-nav .nav-link {
+            font-size: 1.1rem;
+            margin: 0 10px;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* Light theme navbar (black) */
+        .light-theme .navbar {
+            background-color: #000000 !important;
+        }
+
+        .light-theme .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        .light-theme .navbar-nav .nav-link:hover {
+            color: #dc3545 !important;
+            background-color: transparent;
+        }
+
+        .light-theme .navbar-nav .nav-link:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #ffffff;
+        }
+
+        /* Dark theme navbar (white) */
+        .dark-theme .navbar {
+            background-color: #ffffff !important;
+        }
+
+        .dark-theme .navbar .navbar-brand,
+        .dark-theme .navbar .nav-link,
+        .dark-theme .navbar .btn-outline-light {
+            color: #000000 !important;
+            border-color: #000000;
+        }
+
+        .dark-theme .navbar .form-control {
+            background-color: #f8f9fa;
+            color: #000000;
+        }
+        .dark-theme .navbar .btn-outline-light:hover {
+            background-color: #000000;
+            color: #ffffff !important;
+        }
+
+        .dark-theme .navbar-nav .nav-link:hover {
+            color: #dc3545 !important;
+            background-color: transparent;
+        }
+
+        .dark-theme .navbar-nav .nav-link:hover::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #000000;
+        }
+
+        /* Dark theme text color adjustments */
+        .dark-theme .card-text,
+        .dark-theme .src-info p,
+        .dark-theme .src-info h5,
+        .dark-theme .carousel-caption h1,
+        .dark-theme .carousel-caption h2,
+        .dark-theme .carousel-caption p {
+            color: #ffffff !important;
+        }
+
+        .dark-theme .card-title {
+            color: #f8f9fa;
+        }
+
+        /* Search results styling */
+        .search-highlight {
+            background-color: yellow;
+            color: black;
+        }
+
+        .event-hidden {
+            display: none;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .navbar .search-bar {
+                width: 100%;
+                margin: 15px 0;
+            }
+            
+            .hero-section .carousel-item {
+                height: 600px;
+            }
+            
+            .src-team .src-member {
+                text-align: center;
+            }
+            
+            .src-team .d-flex {
+                flex-direction: column;
+            }
+            
+            .src-team .src-member img {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .navbar-nav .nav-link {
+                margin: 5px 0;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 66px;
+            }
+            
+            .hero-section .carousel-item {
+                height: 300px;
+            }
+            
+            .hero-section .carousel-caption h2 {
+                font-size: 1.5rem;
+            }
+            
+            .hero-section .carousel-caption p {
+                font-size: 0.9rem;
+            }
+            
+            .navbar-nav {
+                text-align: center;
+            }
+            
+            .search-bar {
+                order: 3;
+                margin-top: 15px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .logo-img {
+                height: 40px;
+            }
+            
+            .hero-section .carousel-item {
+                height: 250px;
+            }
+            
+            .hero-section .carousel-caption {
+                padding: 10px;
+            }
+            
+            .hero-section .carousel-caption h2 {
+                font-size: 1.2rem;
+            }
+            
+            .hero-section .carousel-caption p {
+                font-size: 0.8rem;
+            }
+            
+            section {
+                padding: 40px 0;
+            }
+
+            .navbar .search-bar {
+                max-width: 100%;
+            }
+        }
+
+        /* View More button styling */
+        .view-more-btn {
+            margin-top: 10px;
+        }
+
+        /* Category search styling */
+        .category-search {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#home">
+                <img src="../Webway/frontend/images/ccoew_logo.jpg" alt="College Logo" class="logo-img">
+            </a>
+            
+            <div class="search-bar mx-3 flex-grow-1">
+                <form class="d-flex" id="search-form">
+                    <input class="form-control me-2" type="search" id="search-input" placeholder="Search events, activities..." aria-label="Search">
+                    <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#events">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#src-team">SRC Team</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact Us</a>
+                    </li>
+                </ul>
+                
+                <div class="d-flex align-items-center ms-3">
+                    <!-- Admin Login Button Added Here -->
+                    <a href="../Webway/login.html" class="btn btn-outline-light me-2">
+                        <i class="fas fa-user-cog"></i>Login
+                    </a>
+                    
+                    <button id="theme-toggle" class="btn btn-outline-light">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header/Hero Section -->
+    <header id="home" class="hero-section">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="../Webway/frontend/images/hero5.jpg" class="d-block w-100" alt="College Event">
+                    <div class="carousel-caption">
+                        <h1>Welcome to CCOEW Nagpur Extracurricular Web</h1>
+                        <p>Discover all the exciting activities happening around campus.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="../Webway/frontend/images/hero6.jpg" class="d-block w-100" alt="College Event">
+                    <div class="carousel-caption">
+                        <h2>Welcome to CCOEW Nagpur Extracurricular Web</h2>
+                        <p>Discover all the exciting activities happening around campus.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="../Webway/frontend/images/hero3.jpg" class="d-block w-100" alt="College Event">
+                    <div class="carousel-caption">
+                        <h2>Welcome to CCOEW Nagpur Extracurricular Web</h2>
+                        <p>Discover all the exciting activities happening around campus.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mt-5">
+
+        <!-- Event Categories -->
+        <section id="events" class="event-categories">
+            <h2 class="text-center mb-5">Event Categories</h2>
+            
+            <div class="row" id="categories-container">
+                <!-- Categories will be populated by JavaScript -->
+            </div>
+        </section>
+        
+        <!-- Upcoming Events -->
+        <section class="upcoming-events mt-5">
+            <h2 class="text-center mb-5">Upcoming Events</h2>
+            
+            <div class="row" id="events-container">
+                <!-- Events will be populated by JavaScript -->
+            </div>
+        </section>
+        
+        <!-- SRC Team Section -->
+        <section id="src-team" class="src-team mt-5 py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-5">SRC Team</h2>
+                <div class="row justify-content-center">
+                    <!-- Row 1 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="src-member d-flex align-items-center p-3 bg-white rounded shadow-sm">
+                            <img src="../Webway/frontend/images/src1.png" alt="Team Member" class="me-4 rounded-circle" width="100" height="100">
+                            <div class="src-info">
+                                <h5>Tejaswini Verma</h5>
+                                <p class="mb-1">General Secretory</p>
+                                <p class="mb-0"><i class="fas fa-phone me-2"></i> +91 9876543210</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="src-member d-flex align-items-center p-3 bg-white rounded shadow-sm">
+                            <img src="../Webway/frontend/images/src2.png" alt="Team Member" class="me-4 rounded-circle" width="100" height="100">
+                            <div class="src-info">
+                                <h5>Janvi Kadu</h5>
+                                <p class="mb-1">Assistant General Secretory Cultural Head</p>
+                                <p class="mb-0"><i class="fas fa-phone me-2"></i> +91 9876543211</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 2 -->
+                    <div class="col-md-6 mb-4">
+                        <div class="src-member d-flex align-items-center p-3 bg-white rounded shadow-sm">
+                            <img src="../Webway/frontend/images/src3.png" alt="Team Member" class="me-4 rounded-circle" width="100" height="100">
+                            <div class="src-info">
+                                <h5>Vidisha Kapse</h5>
+                                <p class="mb-1">Sports Head</p>
+                                <p class="mb-0"><i class="fas fa-phone me-2"></i> +91 9876543210</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="src-member d-flex align-items-center p-3 bg-white rounded shadow-sm">
+                            <img src="../Webway/frontend/images/src4.png" alt="Team Member" class="me-4 rounded-circle" width="100" height="100">
+                            <div class="src-info">
+                                <h5>Prajakta Dixit</h5>
+                                <p class="mb-1">Sports Co-Head</p>
+                                <p class="mb-0"><i class="fas fa-phone me-2"></i> +91 9876543210</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 3 (single item centered) -->
+                    <div class="col-md-6 mb-4">
+                        <div class="src-member d-flex align-items-center p-3 bg-white rounded shadow-sm">
+                            <img src="../Webway/frontend/images/src5.png" alt="Team Member" class="me-4 rounded-circle" width="100" height="100">
+                            <div class="src-info">
+                                <h5>Vaishnavi Lanjewar </h5>
+                                <p class="mb-1">Cultural Head</p>
+                                <p class="mb-0"><i class="fas fa-phone me-2"></i> +91 9876543210</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <div class="src-member d-flex align-items-center p-3 bg-white rounded shadow-sm">
+                            <img src="../Webway/frontend/images/src4.png" alt="Team Member" class="me-4 rounded-circle" width="100" height="100">
+                            <div class="src-info">
+                                <h5>Krushna Kharwade</h5>
+                                <p class="mb-1">Cultural Co-Head</p>
+                                <p class="mb-0"><i class="fas fa-phone me-2"></i> +91 9876543210</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about" class="about-website mt-5 py-5">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 class="text-center mb-4">About This Portal</h2>
+                    <p class="text-center">
+                        The Extracurricular Activities Portal is a centralized platform for students to discover, 
+                        participate in, and stay updated about all events happening across the college and hostels. 
+                        We aim to make it easier for students to engage in campus life beyond academics.
+                    </p>
+                    <p class="text-center">
+                        From cultural festivals to technical competitions, sports tournaments to club activities - 
+                        find all the information you need in one place.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer bg-dark text-white pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center mb-4">
+                    <img src="../Webway/frontend/images/cummins.jpg" alt="College Logo" class="footer-logo mb-3" style="height: 60px;">
+                    <p>Empowering students through extracurricular activities</p>
+                    <p>Building a vibrant campus community beyond academics</p>
+                </div>
+            </div>
+            
+            <div class="row text-center mb-4">
+                <div class="col-md-12">
+                    <a href="https://www.instagram.com/ccoewnagpur?igsh=ZXo2dG9vaGNiNjdw" class="text-white me-3"><i class="fab fa-instagram fa-2x"></i></a>
+                    <a href="mailto:office@cumminscollege.edu.in" class="text-white me-3"><i class="fas fa-envelope fa-2x"></i></a>
+                    <a href="tel:+919420410225" class="text-white me-3"><i class="fas fa-phone fa-2x"></i></a>
+                    <a href="https://www.linkedin.com/in/ccoew-nagpur-1979b5162?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="text-white me-3"><i class="fab fa-linkedin fa-2x"></i></a>
+                    <a href="https://maps.app.goo.gl/CFRLosQtQ4ZcwMaz6" class="text-white"><i class="fas fa-map-marker-alt fa-2x"></i></a>
+                </div>
+            </div>
+            
+            <hr class="bg-white">
+            
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>&copy; 2025 Design by Absolute Tech. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="btn btn-primary" style="position: fixed; bottom: 20px; right: 20px; display: none;">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Event Detail Modal -->
+    <div class="modal fade" id="eventDetailModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventDetailTitle">Event Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="text-center mb-3">
+                        <img id="eventDetailImage" src="" class="img-fluid rounded" alt="Event image" style="max-height: 300px;">
+                    </div>
+                    <p><strong>Date:</strong> <span id="eventDetailDate"></span></p>
+                    <p><strong>Location:</strong> <span id="eventDetailLocation"></span></p>
+                    <p><strong>Description:</strong></p>
+                    <p id="eventDetailDescription"></p>
+                    <div class="d-grid gap-2">
+                        <a id="eventDetailRegistrationLink" href="#" target="_blank" class="btn btn-success">
+                            <i class="fas fa-external-link-alt me-2"></i> Register Now
+                        </a>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // API base URL - Update this to match your backend
+        const API_BASE_URL = 'http://localhost:3001/api';
+        
+        // Event categories data
+        const eventCategories = [
+            { 
+                id: 1,
+                title: 'Annanya', 
+                image: '../Webway/frontend/images/singing.jpg',
+                description: 'Music, dance, drama and other cultural activities',
+                link: '../Webway/frontend/pages/annanya.html',
+                category: 'Cultural'
+            },
+            { 
+                id: 2,
+                title: 'Dahi Handi', 
+                image: '../Webway/frontend/images/dahihandi1.jpg',
+                description: 'Traditional festival celebration',
+                link: '../Webway/frontend/pages/dahihandi.html',
+                category: 'Festival'
+            },
+            { 
+                id: 3,
+                title: 'Umang', 
+                image: '../Webway/frontend/images/u5.jpg',
+                description: 'Various sports competitions and tournaments',
+                link: '../Webway/frontend/pages/umang.html',
+                category: 'Sports'
+            },
+            { 
+                id: 4,
+                title: 'Cultural Events', 
+                image: '../Webway/frontend/images/fs3.jpg',
+                description: 'Music, dance, drama and other cultural activities',
+                link: '../Webway/frontend/pages/cultural.html',
+                category: 'Cultural'
+            },
+            { 
+                id: 5,
+                title: 'Sphurti', 
+                image: '../Webway/frontend/images/sphurti.jpg',
+                description: 'Various sports competitions and tournaments',
+                link: '../Webway/frontend/pages/sphurti.html',
+                category: 'Sports'
+            },
+            { 
+                id: 6,
+                title: 'Avishkar', 
+                image: '../Webway/frontend/images/avishkar1.jpg',
+                description: 'Hackathons, coding competitions and tech workshops',
+                link: '../Webway/frontend/pages/avishkar.html',
+                category: 'Technical'
+            },
+            { 
+                id: 7,
+                title: 'Club Activities', 
+                image: '../Webway/frontend/images/club_logo.jpg',
+                description: 'Activities organized by various college clubs',
+                link: '../Webway/frontend/pages/Club/index2.html',
+                category: 'Clubs'
+            },
+            { 
+                id: 8,
+                title: 'Flashmob', 
+                image: '../Webway/frontend/images/flash3.jpg',
+                description: 'Spontaneous dance performances',
+                link: '../Webway/frontend/pages/flashmob.html',
+                category: 'Performance'
+            },
+            { 
+                id: 9,
+                title: 'Holi Celebration', 
+                image: '../Webway/frontend/images/holi1.jpg',
+                description: 'Festival of colors celebration',
+                link: '../Webway/frontend/pages/holi.html',
+                category: 'Festival'
+            },
+            { 
+                id: 10,
+                title: 'National Celebration', 
+                image: '../Webway/frontend/images/i3.jpg',
+                description: 'Events celebrating national festivals and important days',
+                link: '../Webway/frontend/pages/national.html',
+                category: 'National'
+            }
+        ];
+        
+        // Sample events data (fallback)
+        const events = [
+            { 
+                id: 1,
+                title: 'Annual Cultural Fest', 
+                description: 'Join us for three days of music, dance, drama and various cultural competitions.', 
+                category: 'Cultural',
+                date: '2023-10-15',
+                location: 'College Auditorium',
+                registrationLink: 'pages/registration.html',
+                image_url: '../Webway/frontend/images/hero5.jpg',
+                full_description: 'This is the full description of the Annual Cultural Fest. It includes all the details about the event, the various competitions, the judges, and the prizes. Join us for three days of fun and excitement!'
+            },
+            { 
+                id: 2,
+                title: 'Coding Hackathon', 
+                description: '24-hour hackathon to solve real-world problems using technology. Open to all students.', 
+                category: 'Technical',
+                date: '2023-11-05',
+                location: 'Computer Lab Block B',
+                registrationLink: 'pages/registration.html',
+                image_url: '../Webway/frontend/images/hero6.jpg',
+                full_description: 'This is the full description of the Coding Hackathon. Participants will have 24 hours to develop innovative solutions to real-world problems. Food and drinks will be provided. Great prizes for the winners!'
+            },
+            { 
+                id: 3,
+                title: 'Football Tournament', 
+                description: 'Inter-college football competition with teams from across the region.', 
+                category: 'Sports',
+                date: '2023-09-20',
+                location: 'College Ground',
+                registrationLink: 'pages/registration.html',
+                image_url: '../Webway/frontend/images/hero3.jpg',
+                full_description: 'This is the full description of the Football Tournament. Teams from various colleges will compete for the championship trophy. The tournament will follow league-cum-knockout format. Register your team now!'
+            }
+        ];
+        
+        // Theme toggle functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeIcon = themeToggle.querySelector('i');
+            
+            // Check for saved theme preference or respect OS preference
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.body.className = savedTheme + '-theme';
+                themeIcon.className = savedTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+            } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.body.className = 'dark-theme';
+                themeIcon.className = 'fas fa-sun';
+            }
+            
+            themeToggle.addEventListener('click', function() {
+                if (document.body.classList.contains('light-theme')) {
+                    document.body.classList.replace('light-theme', 'dark-theme');
+                    themeIcon.className = 'fas fa-sun';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.body.classList.replace('dark-theme', 'light-theme');
+                    themeIcon.className = 'fas fa-moon';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+            
+            // Back to top button
+            const backToTopButton = document.getElementById('back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.style.display = 'block';
+                } else {
+                    backToTopButton.style.display = 'none';
+                }
+            });
+            
+            backToTopButton.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Search functionality
+            const searchForm = document.getElementById('search-form');
+            const searchInput = document.getElementById('search-input');
+            
+            searchForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                performSearch(searchInput.value.trim());
+            });
+            
+            // Initial display of categories and events
+            displayCategories(eventCategories);
+            fetchEventsFromAPI();
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if(targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if(targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70, // Adjust for fixed navbar
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Check for localStorage updates every 2 seconds
+            setInterval(checkForUpdates, 2000);
+        });
+
+        // Display event categories
+        function displayCategories(categories) {
+            const categoriesContainer = document.getElementById('categories-container');
+            categoriesContainer.innerHTML = '';
+            
+            if (categories.length === 0) {
+                categoriesContainer.innerHTML = `
+                    <div class="col-12 text-center">
+                        <p>No categories found matching your search.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            categories.forEach(category => {
+                const categoryCol = document.createElement('div');
+                categoryCol.className = 'col-md-4 mb-4';
+                categoryCol.innerHTML = `
+                    <div class="card category-card">
+                        <img src="${category.image}" class="card-img-top" alt="${category.title}">
+                        <div class="card-body">
+                            <h5 class="card-title">${category.title}</h5>
+                            <p class="card-text">${category.description}</p>
+                            <a href="${category.link}" class="btn btn-primary">Explore</a>
+                        </div>
+                    </div>
+                `;
+                categoriesContainer.appendChild(categoryCol);
+            });
+        }
+
+        // Check for updates in localStorage
+        function checkForUpdates() {
+            const updatedEvents = localStorage.getItem('eventsUpdated');
+            if (updatedEvents) {
+                fetchEventsFromAPI();
+                localStorage.removeItem('eventsUpdated');
+            }
+        }
+
+        // Fetch events from API
+        function fetchEventsFromAPI() {
+            // Try to get events from localStorage first (set by admin panel)
+            const localEvents = JSON.parse(localStorage.getItem('events') || '[]');
+            
+            if (localEvents.length > 0) {
+                displayEvents(localEvents);
+                return;
+            }
+            
+            // Fallback to sample events if no events in localStorage
+            displayEvents(events);
+        }
+
+        // Update the displayEvents function to include "View More" button
+        function displayEvents(eventsToShow = events) {
+            const eventsContainer = document.getElementById('events-container');
+            eventsContainer.innerHTML = '';
+            
+            if (eventsToShow.length === 0) {
+                eventsContainer.innerHTML = `
+                    <div class="col-12 text-center">
+                        <p>No upcoming events at the moment. Check back later!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort events by date (soonest first)
+            eventsToShow.sort((a, b) => new Date(a.date) - new Date(b.date));
+            
+            // Filter out past events
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const upcomingEvents = eventsToShow.filter(event => new Date(event.date) >= today);
+            
+            if (upcomingEvents.length === 0) {
+                eventsContainer.innerHTML = `
+                    <div class="col-12 text-center">
+                        <p>No upcoming events at the moment. Check back later!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            upcomingEvents.forEach(event => {
+                const eventDate = new Date(event.date).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                const eventCol = document.createElement('div');
+                eventCol.className = 'col-md-6 mb-4';
+                eventCol.innerHTML = `
+                    <div class="card event-card h-100">
+                        <div class="card-header">
+                            <h5>${event.title}</h5>
+                            <span class="badge bg-info">${event.category || 'Event'}</span>
+                        </div>
+                        <div class="card-body">
+                            <p><i class="fas fa-calendar-alt me-2"></i> ${eventDate}</p>
+                            <p><i class="fas fa-map-marker-alt me-2"></i> ${event.location}</p>
+                            <p>${event.description}</p>
+                            <div class="d-flex justify-content-between">
+                                <a href="${event.registration_link || 'pages/registration.html'}" target="_blank" class="btn btn-success">
+                                    <i class="fas fa-external-link-alt me-2"></i> Register Now
+                                </a>
+                                <button class="btn btn-primary view-more-btn" data-event-id="${event.id}">
+                                    <i class="fas fa-info-circle me-2"></i> View Details
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                eventsContainer.appendChild(eventCol);
+            });
+            
+            // Add event listeners to view more buttons
+            document.querySelectorAll('.view-more-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const eventId = this.getAttribute('data-event-id');
+                    showEventDetails(eventId, eventsToShow);
+                });
+            });
+        }
+
+        // Function to show event details
+        function showEventDetails(eventId, events) {
+            const event = events.find(e => e.id == eventId);
+            if (event) {
+                displayEventDetailsModal(event);
+            } else {
+                console.error('Event not found');
+            }
+        }
+
+        // Function to display event details in a modal
+        function displayEventDetailsModal(event) {
+            const eventDate = new Date(event.date).toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Populate modal with event details
+            document.getElementById('eventDetailTitle').textContent = event.title;
+            document.getElementById('eventDetailDate').textContent = eventDate;
+            document.getElementById('eventDetailLocation').textContent = event.location;
+            document.getElementById('eventDetailDescription').textContent = event.full_description || event.description;
+            document.getElementById('eventDetailRegistrationLink').href = event.registration_link || 'pages/registration.html';
+            
+            // Set image or default image
+            const eventImage = document.getElementById('eventDetailImage');
+            if (event.image_url) {
+                eventImage.src = event.image_url;
+                eventImage.style.display = 'block';
+            } else {
+                eventImage.style.display = 'none';
+            }
+            
+            // Show the modal
+            const modal = new bootstrap.Modal(document.getElementById('eventDetailModal'));
+            modal.show();
+        }
+
+        // Search function
+        function performSearch(query) {
+            if (!query) {
+                fetchEventsFromAPI();
+                displayCategories(eventCategories);
+                return;
+            }
+            
+            // Search in events
+            const searchTerms = query.toLowerCase().split(' ');
+            const filteredEvents = events.filter(event => {
+                const eventText = (event.title + ' ' + event.description + ' ' + event.category).toLowerCase();
+                return searchTerms.some(term => eventText.includes(term));
+            });
+            
+            // Search in categories
+            const filteredCategories = eventCategories.filter(category => {
+                const categoryText = (category.title + ' ' + category.description + ' ' + category.category).toLowerCase();
+                return searchTerms.some(term => categoryText.includes(term));
+            });
+            
+            displayEvents(filteredEvents);
+            displayCategories(filteredCategories);
+            
+            // Scroll to events section if there are results
+            if (filteredEvents.length > 0 || filteredCategories.length > 0) {
+                const eventsSection = document.getElementById('events');
+                if (eventsSection) {
+                    window.scrollTo({
+                        top: eventsSection.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        }
+    </script>
+</body>
+</html>
