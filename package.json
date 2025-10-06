@@ -1,11 +1,12 @@
 {
-  "name": "ccoew-events-backend",
+  "name": "ccoew-events",
   "version": "1.0.0",
-  "description": "Backend for CCOEW Extracurricular Activities Management System",
-  "main": "server.js",
+  "description": "CCOEW Events Management System",
+  "main": "api/index.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node api/index.js",
+    "dev": "nodemon api/index.js",
+    "build": "echo 'No build step needed'"
   },
   "dependencies": {
     "express": "^4.18.2",
@@ -16,5 +17,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
