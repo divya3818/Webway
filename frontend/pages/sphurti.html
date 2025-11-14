@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sphurti - Cummins College Annual Sports Event</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary-color: blue;
+      --secondary-color: #003366;
+      --text-color: #333;
+      --bg-color: #f9f9f9;
+      --card-bg: #ffffff;
+      --nav-bg: #000000;
+      --footer-bg: #222;
+      --footer-text: #fff;
+      --nav-text: #fff;
+    }
+
+    .dark-theme {
+      --primary-color: blue;
+      --secondary-color: #4d94ff;
+      --text-color: #f0f0f0;
+      --bg-color: #121212;
+      --card-bg: #1e1e1e;
+      --nav-bg: #ffffff;
+      --footer-bg: #0d0d0d;
+      --footer-text: #ddd;
+      --nav-text: #000;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 5%;
+      background-color: var(--nav-bg);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      height: 50px;
+      margin-right: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links li {
+      margin: 0 15px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--nav-text);
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-color);
+      border: 2px solid white;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: var(--nav-text);
+      padding: 8px;
+      border-radius: 50%;
+    }
+
+    /* Hero */
+    .hero-section {
+      height: 80vh;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+        url('../images/sphurti.jpg') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      padding: 0 20px;
+    }
+
+    .event-title {
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    .event-subtitle {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      color: #f59e0b;
+    }
+
+    /* Sports Section */
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 40px;
+      color: var(--secondary-color);
+    }
+
+    .sports-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 50px 5%;
+    }
+
+    .sport-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .sport-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+
+    .sport-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .sport-card h3 {
+      margin: 15px 0;
+    }
+
+    .sport-card a {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 8px 18px;
+      background: var(--primary-color);
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 0.9rem;
+    }
+
+    .sport-card a:hover {
+      background: blue;
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 50px 5% 20px;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo img {
+      height: 100px;
+      display: block;
+    }
+
+    .footer-info {
+      text-align: right;
+      max-width: 600px;
+    }
+
+    .footer-info p {
+      margin: 5px 0;
+    }
+
+    .footer-info a {
+      color: var(--footer-text);
+      text-decoration: none;
+    }
+
+    .footer-info a:hover {
+      color: var(--primary-color);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      margin-top: 20px;
+      padding-top: 20px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 10px;
+      }
+      .hero-section h1 { font-size: 2.5rem; }
+      .footer-content { flex-direction: column; align-items: center; text-align: center; }
+      .footer-info { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo-container">
+      <img src="../images/cumminslogo.jpg" alt="College Logo" class="logo">
+    </div>
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#sports">Sports</a></li>
+      <li><a href="#about">About</a></li>
+    </ul>
+    <button class="theme-toggle" id="theme-toggle">
+      <i class="fas fa-moon"></i>
+    </button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="home">
+    <div>
+      <h1 class="event-title">SPHURTI</h1>
+      <p class="event-subtitle">Annual Sports Festival</p>
+      <p>Cummins College of Engineering, Nagpur</p>
+    </div>
+  </section>
+
+  <!-- Sports Section -->
+  <section id="sports">
+    <h2 class="section-title">Sports Events</h2>
+    <div class="sports-container">
+      <div class="sport-card">
+        <img src="../images/volleyball.jpg" alt="Volleyball">
+        <h3>Volleyball</h3>
+        <a href="../pages/subpages/volleyball.html">View Details</a>
+      </div>
+      <div class="sport-card">
+        <img src="../images/chess5.jpg" alt="Chess">
+        <h3>Chess</h3>
+        <a href="../pages/subpages/chess.html">View Details</a>
+      </div>
+      <div class="sport-card">
+        <img src="../images/cricket.jpg" alt="Cricket">
+        <h3>Cricket</h3>
+        <a href="../pages/subpages/cricket.html">View Details</a>
+      </div>
+      <div class="sport-card">
+        <img src="../images/carrom.jpg" alt="Carrom">
+        <h3>Carrom</h3>
+        <a href="../pages/subpages/carrom.html">View Details</a>
+      </div>
+      <div class="sport-card">
+        <img src="../images/kabbadi.jpg" alt="Kabaddi">
+        <h3>Kabaddi</h3>
+        <a href="../pages/subpages/kabbadi.html">View Details</a>
+      </div>
+      <div class="sport-card">
+        <img src="../images/tabletennis.jpg" alt="Table Tennis">
+        <h3>Table Tennis</h3>
+        <a href="../pages/subpages/tabletennis.html">View Details</a>
+      </div>
+      <div class="sport-card">
+        <img src="../images/khokho.jpg" alt="Kho-Kho">
+        <h3>Kho-Kho</h3>
+        <a href="../pages/subpages/khokho.html">View Details</a>
+      </div>
+      <div class="sport-card">
+        <img src="../images/badminton.jpg" alt="Badminton">
+        <h3>Badminton</h3>
+        <a href="../pages/subpages/badminton.html">View Details</a>
+      </div>
+      <div class="sport-card">
+        <img src="../images/running.jpg" alt="Running">
+        <h3>Running</h3>
+        <a href="../pages/subpages/running.html">View Details</a>
+      </div>
+      <div class="sport-card">
+        <img src="../images/yoga.jpg" alt="Yoga">
+        <h3>Yoga</h3>
+        <a href="../pages/subpages/yoga.html">View Details</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <img src="../images/cummins.jpg" alt="Cummins College Logo">
+      </div>
+      <div class="footer-info">
+        <p><strong>Address:</strong> Mouje Sukli (Gupchup), Hingna, Nagpur - 441110</p>
+        <p><strong>Reach Us:</strong></p>
+        <p>📞 +91 9420410225</p>
+        <p>📧 <a href="mailto:office@cumminscollege.edu.in">office@cumminscollege.edu.in</a></p>
+        <p>📸 <a href="https://www.instagram.com/ccoewnagpur?igsh=ZXo2dG9vaGNiNjdw" target="_blank">Instagram</a></p>
+        <p>📍 <a href="https://maps.app.goo.gl/CFRLosQtQ4ZcwMaz6" target="_blank">View on Google Maps</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Cummins College of Engineering, Nagpur | SPHURTI Sports Fest | Designed by Absolute Tech</p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+
+    if (localStorage.getItem('theme') === 'dark' ||
+        (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('theme'))) {
+      document.body.classList.add('dark-theme');
+      themeIcon.classList.replace('fa-moon', 'fa-sun');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-theme');
+      if (document.body.classList.contains('dark-theme')) {
+        localStorage.setItem('theme', 'dark');
+        themeIcon.classList.replace('fa-moon', 'fa-sun');
+      } else {
+        localStorage.setItem('theme', 'light');
+        themeIcon.classList.replace('fa-sun', 'fa-moon');
+      }
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+  </script>
+</body>
+</html>
