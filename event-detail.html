@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details - College Extracurricular Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <!-- Navbar (same as index.html) -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../index.html">
+                <img src="../images/college-logo.png" alt="College Logo" class="logo-img">
+            </a>
+            
+            <div class="search-bar mx-auto">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search events, activities..." aria-label="Search">
+                    <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
+                </form>
+            </div>
+            
+            <div class="d-flex align-items-center">
+                <button id="theme-toggle" class="btn btn-outline-light me-3">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../index.html">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown">
+                            Events
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Cultural</a></li>
+                            <li><a class="dropdown-item" href="#">Sports</a></li>
+                            <li><a class="dropdown-item" href="#">Technical</a></li>
+                            <li><a class="dropdown-item" href="#">Clubs</a></li>
+                            <li><a class="dropdown-item" href="#">National Celebration</a></li>
+                            <li><a class="dropdown-item" href="#">Hostel Events</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="registration.html">Registration</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="gallery.html">Gallery</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="srcTeamDropdown" role="button" data-bs-toggle="dropdown">
+                            SRC Team
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="src-member">
+                                    <img src="../images/placeholder-person.jpg" alt="Team Member">
+                                    <div class="src-info">
+                                        <h6>John Doe</h6>
+                                        <p>President</p>
+                                        <p><i class="fas fa-phone"></i> +91 9876543210</p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="src-member">
+                                    <img src="../images/placeholder-person.jpg" alt="Team Member">
+                                    <div class="src-info">
+                                        <h6>Jane Smith</h6>
+                                        <p>Vice President</p>
+                                        <p><i class="fas fa-phone"></i> +91 9876543211</p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Back Button -->
+    <div class="container mt-5 pt-5">
+        <button class="btn btn-outline-primary mb-4" onclick="history.back()">
+            <i class="fas fa-arrow-left me-2"></i>Back to Events
+        </button>
+    </div>
+
+    <!-- Event Details -->
+    <main class="container mb-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <img src="../images/placeholder-event.jpg" alt="Event Image" class="img-fluid rounded mb-4">
+                
+                <h1>Annual Cultural Fest</h1>
+                <div class="d-flex align-items-center mb-3">
+                    <span class="badge bg-primary me-2">Cultural</span>
+                    <span class="badge bg-warning">Upcoming</span>
+                </div>
+                
+                <div class="event-meta mb-4">
+                    <p><i class="fas fa-calendar-alt me-2"></i> October 15-17, 2023</p>
+                    <p><i class="fas fa-clock me-2"></i> 9:00 AM - 9:00 PM</p>
+                    <p><i class="fas fa-map-marker-alt me-2"></i> College Auditorium and Main Ground</p>
+                </div>
+                
+                <div class="event-description mb-5">
+                    <h3>About the Event</h3>
+                    <p>Join us for three days of music, dance, drama and various cultural competitions. This is the biggest cultural event of the year, featuring performances from all departments and hostels.</p>
+                    
+                    <h4>Event Highlights</h4>
+                    <ul>
+                        <li>Music competition (Solo and Group)</li>
+                        <li>Dance competition (Classical, Western and Folk)</li>
+                        <li>Drama and street play competitions</li>
+                        <li>Art and photography exhibition</li>
+                        <li>Food festival featuring cuisines from different states</li>
+                        <li>Celebrity performance on the final day</li>
+                    </ul>
+                    
+                    <h4>Registration Details</h4>
+                    <p>Registration is open for all students. Participants can register individually or as teams depending on the event. Last date for registration is October 10, 2023.</p>
+                    
+                    <h4>Prizes</h4>
+                    <p>Winners will receive trophies, certificates and cash prizes worth ₹50,000. Special prizes for best performers in each category.</p>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card sticky-top" style="top: 100px;">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Event Registration</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">Register now to participate in this exciting event!</p>
+                        
+                        <div class="d-grid gap-2">
+                            <a href="registration.html" class="btn btn-success btn-lg">
+                                <i class="fas fa-user-plus me-2"></i>Register Now
+                            </a>
+                            <a href="#" class="btn btn-outline-primary">
+                                <i class="fas fa-download me-2"></i>Download Brochure
+                            </a>
+                        </div>
+                        
+                        <hr>
+                        
+                        <h6>Contact Organizers</h6>
+                        <p class="mb-1"><i class="fas fa-user me-2"></i>John Doe (Cultural Secretary)</p>
+                        <p class="mb-1"><i class="fas fa-phone me-2"></i>+91 9876543210</p>
+                        <p class="mb-0"><i class="fas fa-envelope me-2"></i>cultural@college.edu</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Related Events -->
+        <section class="related-events mt-5">
+            <h2 class="mb-4">Related Events</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="../images/placeholder-event.jpg" class="card-img-top" alt="Related Event">
+                        <div class="card-body">
+                            <h5 class="card-title">Dance Competition</h5>
+                            <p class="card-text">Show your dance moves and win exciting prizes.</p>
+                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="../images/placeholder-event.jpg" class="card-img-top" alt="Related Event">
+                        <div class="card-body">
+                            <h5 class="card-title">Music Festival</h5>
+                            <p class="card-text">Singing competition for solo and group performers.</p>
+                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <img src="../images/placeholder-event.jpg" class="card-img-top" alt="Related Event">
+                        <div class="card-body">
+                            <h5 class="card-title">Art Exhibition</h5>
+                            <p class="card-text">Display your artistic talents in various categories.</p>
+                            <a href="#" class="btn btn-outline-primary btn-sm">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer (same as index.html) -->
+    <footer class="footer bg-dark text-white pt-5 pb-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center mb-4">
+                    <img src="../images/college-logo.png" alt="College Logo" class="footer-logo mb-3">
+                    <p>Empowering students through extracurricular activities</p>
+                    <p>Building a vibrant campus community beyond academics</p>
+                </div>
+            </div>
+            
+            <div class="row text-center mb-4">
+                <div class="col-md-12">
+                    <a href="#" class="text-white me-3"><i class="fab fa-instagram fa-2x"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fas fa-envelope fa-2x"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fas fa-phone fa-2x"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-linkedin fa-2x"></i></a>
+                    <a href="#" class="text-white"><i class="fas fa-map-marker-alt fa-2x"></i></a>
+                </div>
+            </div>
+            
+            <hr class="bg-white">
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h5>General Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="../index.html" class="text-white">Home</a></li>
+                        <li><a href="#" class="text-white">Events</a></li>
+                        <li><a href="gallery.html" class="text-white">Gallery</a></li>
+                        <li><a href="#" class="text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5>About the Website</h5>
+                    <p>This portal is designed to help students discover and participate in various extracurricular activities happening in the college and hostels.</p>
+                </div>
+            </div>
+            
+            <hr class="bg-white">
+            
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p>&copy; 2025 Design by Absolute Tech. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="btn btn-primary">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/theme.js"></script>
+    <script src="../js/script.js"></script>
+</body>
+</html>

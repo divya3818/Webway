@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - College Club Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3a0ca3;
+            --secondary: #4361ee;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9fafb;
+        }
+        
+        .sidebar {
+            background: var(--dark);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding-top: 20px;
+        }
+        
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 10px 20px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            background: white;
+        }
+        
+        .gallery-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .club-card {
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .club-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Section (shown when not authenticated) -->
+    <div id="loginSection" class="container">
+        <div class="login-container">
+            <h2 class="text-center mb-4">Admin Login</h2>
+            <div id="loginMessage" class="alert alert-danger d-none"></div>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="username" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+            <div class="mt-3 text-center">
+                <p>Default credentials: <br>Username: <strong>admin</strong><br>Password: <strong>admin123</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel (shown when authenticated) -->
+    <div id="adminPanel" class="d-none">
+        <div class="sidebar" style="width: 250px;">
+            <div class="text-center mb-4">
+                <h4>Admin Panel</h4>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" data-section="dashboard">
+                        <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-section="clubs">
+                        <i class="fas fa-users me-2"></i> Manage Clubs
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-section="gallery">
+                        <i class="fas fa-images me-2"></i> Manage Gallery
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="main-content">
+            <!-- Dashboard Section -->
+            <div id="dashboardSection">
+                <h2 class="mb-4">Dashboard</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-white bg-primary mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title" id="clubsCount">0</h5>
+                                <p class="card-text">Total Clubs</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-white bg-success mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title" id="imagesCount">0</h5>
+                                <p class="card-text">Total Gallery Images</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Clubs Management Section -->
+            <div id="clubsSection" class="d-none">
+                <h2 class="mb-4">Manage Clubs</h2>
+                <div class="row" id="clubsList">
+                    <!-- Clubs will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Gallery Management Section -->
+            <div id="gallerySection" class="d-none">
+                <h2 class="mb-4">Manage Gallery</h2>
+                <div class="mb-4">
+                    <select class="form-select" id="clubSelect">
+                        <option value="">Select a club</option>
+                    </select>
+                </div>
+                
+                <div id="galleryContent">
+                    <div class="mb-4">
+                        <h5>Add New Image</h5>
+                        <form id="uploadImageForm" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <input type="file" class="form-control" id="galleryImage" accept="image/*" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="imageCaption" placeholder="Image caption">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Upload Image</button>
+                        </form>
+                    </div>
+                    
+                    <h5 class="mt-4">Existing Images</h5>
+                    <div class="row" id="galleryImages">
+                        <!-- Gallery images will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API_BASE = 'http://localhost:3000/api';
+        let authToken = localStorage.getItem('adminToken');
+        
+        // Check if user is already logged in
+        if (authToken) {
+            showAdminPanel();
+            loadDashboard();
+        }
+        
+        // Login form submission
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            try {
+                const response = await fetch(`${API_BASE}/admin/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    authToken = data.token;
+                    localStorage.setItem('adminToken', authToken);
+                    showAdminPanel();
+                    loadDashboard();
+                } else {
+                    showMessage(data.error, 'danger');
+                }
+            } catch (error) {
+                showMessage('Login failed. Please try again.', 'danger');
+            }
+        });
+        
+        // Logout button
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            localStorage.removeItem('adminToken');
+            authToken = null;
+            document.getElementById('adminPanel').classList.add('d-none');
+            document.getElementById('loginSection').classList.remove('d-none');
+        });
+        
+        // Navigation
+        document.querySelectorAll('.nav-link[data-section]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Update active link
+                document.querySelectorAll('.nav-link').forEach(navLink => {
+                    navLink.classList.remove('active');
+                });
+                link.classList.add('active');
+                
+                // Show corresponding section
+                const section = link.getAttribute('data-section');
+                document.querySelectorAll('[id$="Section"]').forEach(sectionEl => {
+                    sectionEl.classList.add('d-none');
+                });
+                document.getElementById(`${section}Section`).classList.remove('d-none');
+                
+                // Load section data
+                if (section === 'clubs') {
+                    loadClubs();
+                } else if (section === 'gallery') {
+                    loadClubsForGallery();
+                }
+            });
+        });
+        
+        // Gallery club selection
+        document.getElementById('clubSelect').addEventListener('change', (e) => {
+            const clubId = e.target.value;
+            if (clubId) {
+                loadGalleryImages(clubId);
+            }
+        });
+        
+        // Image upload form
+        document.getElementById('uploadImageForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const clubId = document.getElementById('clubSelect').value;
+            const imageFile = document.getElementById('galleryImage').files[0];
+            const caption = document.getElementById('imageCaption').value;
+            
+            if (!clubId) {
+                alert('Please select a club first');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('image', imageFile);
+            formData.append('caption', caption);
+            
+            try {
+                const response = await fetch(`${API_BASE}/clubs/${clubId}/gallery`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: formData
+                });
+                
+                if (response.ok) {
+                    alert('Image uploaded successfully');
+                    document.getElementById('uploadImageForm').reset();
+                    loadGalleryImages(clubId);
+                } else {
+                    const error = await response.json();
+                    alert('Error: ' + error.error);
+                }
+            } catch (error) {
+                alert('Upload failed. Please try again.');
+            }
+        });
+        
+        function showAdminPanel() {
+            document.getElementById('loginSection').classList.add('d-none');
+            document.getElementById('adminPanel').classList.remove('d-none');
+        }
+        
+        function showMessage(message, type) {
+            const messageEl = document.getElementById('loginMessage');
+            messageEl.textContent = message;
+            messageEl.classList.remove('d-none', 'alert-success', 'alert-danger');
+            messageEl.classList.add(`alert-${type}`);
+        }
+        
+        async function loadDashboard() {
+            try {
+                // Load clubs count
+                const clubsResponse = await fetch(`${API_BASE}/clubs`);
+                const clubs = await clubsResponse.json();
+                document.getElementById('clubsCount').textContent = clubs.length;
+                
+                // For simplicity, we'll just show the count of the first club's images
+                if (clubs.length > 0) {
+                    const imagesResponse = await fetch(`${API_BASE}/clubs/${clubs[0].id}/gallery`);
+                    const images = await imagesResponse.json();
+                    document.getElementById('imagesCount').textContent = images.length;
+                }
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+            }
+        }
+        
+        async function loadClubs() {
+            try {
+                const response = await fetch(`${API_BASE}/clubs`);
+                const clubs = await response.json();
+                
+                const clubsList = document.getElementById('clubsList');
+                clubsList.innerHTML = '';
+                
+                clubs.forEach(club => {
+                    const clubCard = document.createElement('div');
+                    clubCard.className = 'col-md-6 col-lg-4';
+                    clubCard.innerHTML = `
+                        <div class="card club-card">
+                            <img src="${club.image_path || '../Club/Hero_Section/heroimage.jpg'}" class="card-img-top" alt="${club.name}" style="height: 200px; object-fit: cover;">
+                            <div class="card-body">
+                                <h5 class="card-title">${club.name}</h5>
+                                <div class="mb-3">
+                                    <label class="form-label">Registration Link</label>
+                                    <input type="text" class="form-control mb-2" id="regLink-${club.id}" value="${club.registration_link || ''}">
+                                    <button class="btn btn-sm btn-primary update-reg-link" data-club-id="${club.id}">Update Link</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    clubsList.appendChild(clubCard);
+                });
+                
+                // Add event listeners to update buttons
+                document.querySelectorAll('.update-reg-link').forEach(button => {
+                    button.addEventListener('click', async (e) => {
+                        const clubId = e.target.getAttribute('data-club-id');
+                        const newLink = document.getElementById(`regLink-${clubId}`).value;
+                        
+                        try {
+                            const response = await fetch(`${API_BASE}/clubs/${clubId}/registration-link`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': `Bearer ${authToken}`
+                                },
+                                body: JSON.stringify({ registration_link: newLink })
+                            });
+                            
+                            if (response.ok) {
+                                alert('Registration link updated successfully');
+                            } else {
+                                const error = await response.json();
+                                alert('Error: ' + error.error);
+                            }
+                        } catch (error) {
+                            alert('Update failed. Please try again.');
+                        }
+                    });
+                });
+            } catch (error) {
+                console.error('Error loading clubs:', error);
+            }
+        }
+        
+        async function loadClubsForGallery() {
+            try {
+                const response = await fetch(`${API_BASE}/clubs`);
+                const clubs = await response.json();
+                
+                const clubSelect = document.getElementById('clubSelect');
+                clubSelect.innerHTML = '<option value="">Select a club</option>';
+                
+                clubs.forEach(club => {
+                    const option = document.createElement('option');
+                    option.value = club.id;
+                    option.textContent = club.name;
+                    clubSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading clubs for gallery:', error);
+            }
+        }
+        
+        async function loadGalleryImages(clubId) {
+            try {
+                const response = await fetch(`${API_BASE}/clubs/${clubId}/gallery`);
+                const images = await response.json();
+                
+                const galleryContainer = document.getElementById('galleryImages');
+                galleryContainer.innerHTML = '';
+                
+                if (images.length === 0) {
+                    galleryContainer.innerHTML = '<p>No images found for this club.</p>';
+                    return;
+                }
+                
+                images.forEach(image => {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-4 mb-4';
+                    col.innerHTML = `
+                        <div class="card">
+                            <img src="${image.image_path}" class="gallery-image" alt="${image.caption || 'Gallery image'}">
+                            <div class="card-body">
+                                <p class="card-text">${image.caption || 'No caption'}</p>
+                                <button class="btn btn-sm btn-danger delete-image" data-image-id="${image.id}">Delete</button>
+                            </div>
+                        </div>
+                    `;
+                    galleryContainer.appendChild(col);
+                });
+                
+                // Add event listeners to delete buttons
+                document.querySelectorAll('.delete-image').forEach(button => {
+                    button.addEventListener('click', async (e) => {
+                        if (!confirm('Are you sure you want to delete this image?')) {
+                            return;
+                        }
+                        
+                        const imageId = e.target.getAttribute('data-image-id');
+                        
+                        try {
+                            const response = await fetch(`${API_BASE}/gallery/${imageId}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'Authorization': `Bearer ${authToken}`
+                                }
+                            });
+                            
+                            if (response.ok) {
+                                alert('Image deleted successfully');
+                                loadGalleryImages(clubId);
+                            } else {
+                                const error = await response.json();
+                                alert('Error: ' + error.error);
+                            }
+                        } catch (error) {
+                            alert('Deletion failed. Please try again.');
+                        }
+                    });
+                });
+            } catch (error) {
+                console.error('Error loading gallery images:', error);
+            }
+        }
+    </script>
+</body>
+</html>

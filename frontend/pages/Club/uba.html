@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #b30000;
+            --secondary-color: #003366;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #ffffff;
+            --nav-bg: #000000;
+            --footer-bg: #222;
+            --footer-text: #fff;
+            --nav-text:  #fff;
+        }
+
+        .dark-theme {
+            --primary-color: #ff4d4d;
+            --secondary-color: #4d94ff;
+            --text-color: #f0f0f0;
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --nav-bg: #ffffff;
+            --footer-bg: #0d0d0d;
+            --footer-text: #ddd;
+            --nav-text: #000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: var(--nav-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--nav-text);
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+            border: 2px solid white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .register-btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .register-btn:hover {
+            background-color: #990000;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: var(--nav-text);
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            color: var(--primary-color);
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../Club/Hero_Section/uba1.jpg') no-repeat center center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #990000;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-content p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        /* Team Section */
+        .team {
+            padding: 80px 5%;
+            background-color: var(--card-bg);
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--primary-color);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .team-member {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            padding: 20px;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .member-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid var(--primary-color);
+        }
+
+        .member-name {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+        }
+
+        .member-role {
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        /* Gallery Section */
+        .gallery {
+            padding: 80px 5%;
+            text-align: center;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 40px 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 250px;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+
+        .view-more {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 30px;
+            background-color: var(--secondary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .view-more:hover {
+            background-color: #00264d;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 50px 5% 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .footer-section p {
+            margin-bottom: 10px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            color: var(--footer-text);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .nav-links {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links li {
+                margin: 5px 10px;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .team-grid,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="../Club/Logo/ccoew_logo.jpg" alt="College Logo" class="logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="https://docs.google.com/forms/d/1Mo6ZTrLvcQqw1Mc6-xaNk7ixz5fdqkCxDH22fH1g-xw/edit" class="cta-button" target="_blank">Register Now</a></li>
+        </ul>
+        <button class="theme-toggle" id="theme-toggle">
+            <i class="fas fa-moon"></i>
+        </button>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Unnat Bharat Abhiyan</h1>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <h2 class="section-title">About UBA</h2>
+        <div class="about-content">
+            <p>The Computer Society of India is not limited to a few parameters or techno-savvy words but justifies the terms Learn, Connect, and Grow in all respect. There will be a lot of learning, talks, and hands-on something like having a full-fledged carnival experience out here. This club will help the students bridge the gap between practical and theory. CSI. students grow their knowledge in a peer-to-peer learning environment and build solutions for daily problems and their communities</p>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team" id="team">
+        <h2 class="section-title">Our Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="../Club/Hero_Section/src1.png" alt="Team Member" class="member-img">
+                <h3 class="member-name">Khushi Kumari</h3>
+                <p class="member-role">President</p>
+                <p><i class="fas fa-phone"></i> +91 9420410225</p>
+
+            </div>
+            <div class="team-member">
+                <img src="../Club/Hero_Section/src1.png" alt="Team Member" class="member-img">
+                <h3 class="member-name">Netra Pant</h3>
+                <p class="member-role">Vice President</p>
+                <p><i class="fas fa-phone"></i> +91 9420410225</p>
+            </div>
+            <div class="team-member">
+                <img src="../Club/Hero_Section/src1.png" alt="Team Member" class="member-img">
+                <h3 class="member-name">Vaidehi Aher</h3>
+                <p class="member-role">Digital Architect</p>
+                <p><i class="fas fa-phone"></i> +91 9420410225</p>
+
+            </div>
+            <div class="team-member">
+                <img src="../Club/Hero_Section/src1.png" alt="Team Member" class="member-img">
+                <h3 class="member-name"> Ojasvi Bodhane</h3>
+                <p class="member-role">Secretary</p>
+                <p><i class="fas fa-phone"></i> +91 9420410225</p>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <h2 class="section-title">Event Gallery</h2>
+        <p>Take a look at moments from our previous events and activities</p>
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="../Club/Hero_Section/uba1.jpg"  class="gallery-img">
+            </div>
+            <div class="gallery-item">
+                <img src="../Club/Hero_Section/uba1.jpg"  class="gallery-img">
+            </div>
+            <div class="gallery-item">
+                <img src="../Club/Hero_Section/uba1.jpg"  class="gallery-img">
+            </div>
+            <div class="gallery-item">
+                <img src="../Club/Hero_Section/uba1.jpg"  class="gallery-img">
+            </div>
+            <div class="gallery-item">
+                <img src="../Club/Hero_Section/uba1.jpg"  class="gallery-img">
+            </div>
+            <div class="gallery-item">
+                <img src="../Club/Hero_Section/csi1.jpg"  class="gallery-img">
+            </div>
+            <div class="gallery-item">
+                <img src="../Club/Hero_Section/csi1.jpg"  class="gallery-img">
+            </div>
+            <div class="gallery-item">
+                <img src="../Club/Hero_Section/csi1.jpg"  class="gallery-img">
+            </div>
+            <div class="gallery-item">
+                <img src="../Club/Hero_Section/csi1.jpg"  class="gallery-img">
+            </div>
+            <div class="gallery-item">
+                <img src="../Club/Hero_Section/csi1.jpg" class="gallery-img">
+            </div>
+        </div>
+        <a href="#" class="view-more">View More</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> CCOEW, Nagpur, Maharashtra</p>
+                <p><i class="fas fa-phone"></i> +91 9420410225</p>
+                <p><i class="fas fa-envelope"></i> csi@cumminscollege.edu.in</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <p>Stay updated with our latest events and activities</p>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/ccoewnagpur?igsh=ZXo2dG9vaGNiNjdw"><i class="fab fa-instagram"></i></a>
+                    <a href="mailto:office@cumminscollege.edu.in"><i class="fas fa-envelope"></i></a>
+                    <a href="https://www.linkedin.com/in/ccoew-nagpur-1979b5162?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://maps.app.goo.gl/CFRLosQtQ4ZcwMaz6"><i class="fas fa-map-marker-alt"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CCOEW Nagpur Coders Club. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference or respect OS preference
+        if (localStorage.getItem('theme') === 'dark' || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('theme'))) {
+            document.body.classList.add('dark-theme');
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-theme');
+            if (document.body.classList.contains('dark-theme')) {
+                localStorage.setItem('theme', 'dark');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // View More functionality for gallery
+        const viewMoreBtn = document.querySelector('.view-more');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        // Initially hide some gallery items
+        for (let i = 5; i < galleryItems.length; i++) {
+            galleryItems[i].style.display = 'none';
+        }
+        
+        let showingAll = false;
+        viewMoreBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            if (showingAll) {
+                // Hide extra items
+                for (let i = 6; i < galleryItems.length; i++) {
+                    galleryItems[i].style.display = 'none';
+                }
+                viewMoreBtn.textContent = 'View More';
+            } else {
+                // Show all items
+                for (let i = 5; i < galleryItems.length; i++) {
+                    galleryItems[i].style.display = 'block';
+                }
+                viewMoreBtn.textContent = 'View Less';
+            }
+            
+            showingAll = !showingAll;
+        });
+    </script>
+</body>
+</html>
