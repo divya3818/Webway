@@ -1,0 +1,45 @@
+{
+  "admins": [
+    {
+      "id": 1,
+      "email": "admin.user@cumminscollege.edu.in",
+      "password": "admin123",
+      "name": "Admin User",
+      "active": true
+    },
+    {
+      "id": 2,
+      "email": "john.doe@cumminscollege.edu.in",
+      "password": "john123",
+      "name": "John Doe",
+      "active": true
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "title": "Annual Cultural Fest",
+      "date": "2023-10-15",
+      "location": "College Auditorium",
+      "description": "Join us for three days of music, dance, drama and various cultural competitions.",
+      "fullDescription": "This is the biggest cultural event of the year featuring performances from all departments. There will be competitions in music, dance, drama, and fine arts. Food stalls and merchandise will be available throughout the event.",
+      "image": "../Webway/frontend/images/hero5.jpg",
+      "registrationLink": "https://docs.google.com/forms/example1",
+      "upcoming": true,
+      "createdAt": "2023-09-01T10:00:00Z"
+    },
+    {
+      "id": 2,
+      "title": "Coding Hackathon",
+      "date": "2023-11-05",
+      "location": "Computer Lab Block B",
+      "description": "24-hour hackathon to solve real-world problems using technology.",
+      "fullDescription": "A 24-hour intensive coding competition where participants will work in teams to solve real-world problems. Categories include web development, AI/ML, and mobile apps. Experienced mentors will be available throughout the event.",
+      "image": "../Webway/frontend/images/avishkar1.jpg",
+      "registrationLink": "https://docs.google.com/forms/example2",
+      "upcoming": true,
+      "createdAt": "2023-09-10T14:30:00Z"
+    }
+  ]
+
+}
